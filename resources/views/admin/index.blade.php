@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title></title>
-</head>
-<body>
+  <head> 
+    @include('admin.css')
+  </head>
+  <body>
     
-    <h1>Admin</h1>
+        @include('admin.header')
 
-
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
+        <!-- Sidebar Navigation-->
+        @include('admin.sidebar') 
+        <!-- Sidebar Navigation end-->
         
-        <input type="submit" value="Logout" />
-        
-    </form>
-
-</body>
+      <div class="page-content">
+        <div class="page-header">
+          <div class="container-fluid">
+            @include('admin.body')
+          </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"> </script>
+    <script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('/admincss/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
+    <script src="{{asset('/admincss/vendor/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('/admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('/admincss/js/charts-home.js')}}"></script>
+    <script src="{{asset('/admincss/js/front.js')}}"></script>
+  </body>
 </html>
