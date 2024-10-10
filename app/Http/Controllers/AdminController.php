@@ -102,6 +102,75 @@ class AdminController extends Controller
     
         return redirect()->back();
     }
-    
 
+
+    public function view_product()
+    {
+        $products = Product::paginate(5);
+
+        return view('admin.view_product',compact('products'));
+    }
+    
+    public function delete_product($id)
+    {
+        $datas = Product::find($id);
+
+        $image_path = public_path('products/'.$datas->image);
+
+        if(file_exists($image_path)){
+            unlink($image_path);
+        }
+
+        $datas->delete();
+
+        toastr()->timeOut(5000)->closeButton()->success('Product Deleted Successfully.');
+
+        return redirect()->back();
+    }
+
+
+    public function update_product($id)
+    {
+        $datas = Product::find($id);
+
+        $categories = Category::all();
+
+        return view('admin.update_product',compact('datas','categories'));
+    }
+
+    public function edit_product(Request $request, $id)
+    {
+        $datas = Product::find($id);
+        
+        $datas->title = $request->title;
+        $datas->description = $request->description;
+        $datas->price = $request->price;
+        $datas->quantity = $request->quantity;
+        $datas->category = $request->category; 
+        
+        $image = $request->file('newimg');
+        if ($image) {
+            $imagename = time() . '.' . $image->getClientOriginalExtension();
+            $request->file('newimg')->move('products', $imagename);
+            $datas->image = $imagename;
+        }
+    
+        $datas->save();
+
+        toastr()->timeOut(5000)->closeButton()->success('Product Updated Successfully.');
+
+        return redirect('/view_product');
+    }
+
+
+    public function product_search(Request $request)
+    {
+        $search = $request->search;
+
+        $products = Product::where('title','LIKE','%'. $search .'%')->orWhere('category', 'LIKE', '%' . $search . '%')->paginate(2);
+
+        return view('admin.view_product', compact('products'));
+    }
+    
+    
 }
