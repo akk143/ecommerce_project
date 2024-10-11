@@ -21,7 +21,16 @@ class HomeController extends Controller
 
         $products = Product::all();
 
-        return view('home.index',compact('products'));
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.index',compact('products','count'));
     }
 
 
@@ -29,7 +38,16 @@ class HomeController extends Controller
     {
         $products = Product::all();
 
-        return view('home.index',compact('products'));
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.index',compact('products','count'));
     }
 
 
@@ -37,7 +55,16 @@ class HomeController extends Controller
     {
         $datas = Product::find($id);
 
-        return view('home.product_details',compact('datas'));
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.product_details',compact('datas','count'));
     }
 
     public function add_cart($id)
@@ -57,5 +84,40 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function mycart()
+    {
+        if(Auth::id()){
+
+            $user = Auth::user();
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+
+            $carts = Cart::where('user_id',$userid)->get();
+
+        }
+
+        return view('home.mycart',compact('count'),compact('carts'));
+    }
+
+    public function delete_cart($id)
+    {
+        if(Auth::check()){
+
+            $user = Auth::user();
+    
+            $cart = Cart::where('user_id', $user->id)->where('id', $id)->first();
+    
+            if($cart){ 
+                $cart->delete();
+                toastr()->success('Item Removed Successfully.'); 
+            }
+        }
+    
+        return redirect()->back(); 
+    }
+    
 
 }
