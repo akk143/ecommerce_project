@@ -56,6 +56,16 @@ Route::get('mycart',[HomeController::class,'mycart'])->middleware(['auth', 'veri
 
 Route::get('delete_cart/{id}',[HomeController::class,'delete_cart'])->middleware(['auth', 'verified']);
 
+Route::post('confirm_order',[HomeController::class,'confirm_order'])->middleware(['auth', 'verified']);
+
+Route::get('view_order',[AdminController::class,'view_order'])->middleware(['auth', 'admin']);
+
+Route::get('on_the_way/{id}',[AdminController::class,'on_the_way'])->middleware(['auth', 'admin']);
+Route::get('delivered/{id}',[AdminController::class,'delivered'])->middleware(['auth', 'admin']);
+
+
+
+
 
 
 

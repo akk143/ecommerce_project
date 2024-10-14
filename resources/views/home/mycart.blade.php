@@ -29,6 +29,22 @@
             font-weight: 400;
             border: 2px solid #000;
         }
+        form{
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0px 1.3px 1.5px rgba(0,0,0,.3);
+
+            padding: 20px;
+            margin: 20px;
+        }
+        form label{
+            width: 150px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .form-group{
+            margin-bottom: 15px;
+        }
 
     </style>
 </head>
@@ -44,6 +60,31 @@
 
 
   <div class="d-flex justify-content-center align-items-center p-3 m-5">
+
+    <div class="col-md-4">
+        <form action="{{url('confirm_order')}}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label>Receiver Name</label>
+                <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" />
+            </div>
+
+            <div class="form-group">
+                <label>Receiver Address</label>
+                <textarea class="form-control" name="address">{{Auth::user()->address}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Receiver Phone</label>
+                <input type="text" class="form-control" name="phone" value="{{Auth::user()->phone}}" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name="submit" value="Place Order" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
     <table>
         <tr>
             <th>Product Title</th>

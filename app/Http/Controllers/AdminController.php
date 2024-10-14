@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 
 use Flasher\Toastr\Prime\ToastrInterface;
@@ -172,5 +173,23 @@ class AdminController extends Controller
         return view('admin.view_product', compact('products'));
     }
     
+
+    public function view_order()
+    {
+        $datas = Order::all();
+
+        return view('admin.order',compact('datas'));
+    }
+
+
+    public function delivered($id)
+    {
+        $data = Order::find($id);
+
+        $data->status = 'Package Delivered';
+        $data->save();
+
+        return redirect('/view_order');
+    }
     
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Order;
 
 
 
@@ -117,6 +118,44 @@ class HomeController extends Controller
         }
     
         return redirect()->back(); 
+    }
+
+
+    public function confirm_order(Request $request)
+    {
+        $name = $request->name;
+        $address = $request->address;
+        $phone = $request->phone;
+
+        $userid = Auth::user()->id;
+        $carts = Cart::where('user_id',$userid)->get();
+
+
+        foreach($carts as $cart){
+
+            $order = new Order();
+
+            $order->name = $name;
+            $order->rec_address = $address;
+            $order->phone = $phone;
+            $order->user_id = $userid;
+            $order->product_id = $cart->product_id;
+
+            $order->save();
+        }
+        
+
+        $cart_removes = Cart::where('user_id',$userid)->get();
+
+        foreach($cart_removes as $cart_remove){
+
+            $data = Cart::find($cart_remove->id);
+            $data->delete();
+        }
+
+        toastr()->success('Order Placed Successfully.'); 
+
+        return redirect()->back();
     }
     
 
