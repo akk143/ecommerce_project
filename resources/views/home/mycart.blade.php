@@ -59,31 +59,7 @@
   </div>
 
 
-  <div class="d-flex justify-content-center align-items-center p-3 m-5">
-
-    <div class="col-md-4">
-        <form action="{{url('confirm_order')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label>Receiver Name</label>
-                <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" />
-            </div>
-
-            <div class="form-group">
-                <label>Receiver Address</label>
-                <textarea class="form-control" name="address">{{Auth::user()->address}}</textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Receiver Phone</label>
-                <input type="text" class="form-control" name="phone" value="{{Auth::user()->phone}}" />
-            </div>
-
-            <div class="form-group">
-                <input type="submit" name="submit" value="Place Order" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    <div class="d-flex justify-content-center align-items-center p-3 m-5">
 
     <table>
         <tr>
@@ -119,12 +95,38 @@
         @endforeach
 
     </table>
-  </div>
+    </div>
 
-  <div style="text-align: center; margin-bottom: 30px;">
-    <h3>Total Value of Cart is : ${{$value}}</h3>
-  </div>
-   
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h3>Total Value of Cart is : ${{$value}}</h3>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-4">
+            <form action="{{url('confirm_order')}}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label>Receiver Name</label>
+                    <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}" />
+                </div>
+    
+                <div class="form-group">
+                    <label>Receiver Address</label>
+                    <textarea class="form-control" name="address">{{Auth::user()->address}}</textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label>Receiver Phone</label>
+                    <input type="text" class="form-control" name="phone" value="{{Auth::user()->phone}}" />
+                </div>
+    
+                <div class="form-group">
+                    <input type="submit" name="submit" value="Cash On Delivery" class="btn btn-primary" />
+                    <a href="{{url('stripe',$value)}}" class="btn btn-success">Pay Using Card</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
   <!-- info section -->
         @include('home.info')

@@ -12,6 +12,8 @@ Route::get('/',[HomeController::class,'home']);
 Route::get('/dashboard',[HomeController::class,'login_home'])
         ->middleware(['auth', 'verified'])->name('dashboard');;
 
+Route::get('/myorders',[HomeController::class,'myorders'])
+        ->middleware(['auth', 'verified']);;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,10 +60,22 @@ Route::get('delete_cart/{id}',[HomeController::class,'delete_cart'])->middleware
 
 Route::post('confirm_order',[HomeController::class,'confirm_order'])->middleware(['auth', 'verified']);
 
+Route::controller(HomeController::class)->group(function(){
+
+        Route::get('stripe/{value}', 'stripe');
+    
+        Route::post('stripe/{value}', 'stripePost')->name('stripe.post');
+    
+    });
+
 Route::get('view_order',[AdminController::class,'view_order'])->middleware(['auth', 'admin']);
 
 Route::get('on_the_way/{id}',[AdminController::class,'on_the_way'])->middleware(['auth', 'admin']);
 Route::get('delivered/{id}',[AdminController::class,'delivered'])->middleware(['auth', 'admin']);
+
+Route::get('print_pdf/{id}',[AdminController::class,'print_pdf'])->middleware(['auth', 'admin']);
+
+
 
 
 

@@ -38,6 +38,8 @@
 
         @auth
 
+        <a href="{{url('myorders')}}" style="color: rgb(83, 81, 81);" class="mr-3 text-uppercase">My Orders</a>
+
         <a href="{{url('mycart')}}" class="mr-3">
           <i class="fa fa-shopping-bag" style="color: black !important" aria-hidden="true"></i>
           <span>({{$count}})</span>
@@ -46,7 +48,7 @@
         <form method="POST" action="{{ route('logout') }}" class="p-2 mr-3">
           @csrf
 
-          <input class="btn btn-success" type="submit" style="background-color: green !important; color: white !important; border-color: green !important;" value="Logout" />
+          <input class="btn btn-success" type="submit" value="Logout" />
         </form>
 
         @else
@@ -73,4 +75,5 @@
         </div>
       </div>
     </nav>
-  </header>
+  </header> 
+

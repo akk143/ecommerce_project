@@ -3,19 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Order;
 
+use Illuminate\Support\Facades\Auth;
+
+use Session;
+use Stripe;
 
 
 class HomeController extends Controller
 {
     public function index(){
-        return view('admin.index');
+
+        $users = User::where('usertype','user')->get()->count();
+
+        $products = Product::all()->count();
+        $orders = Order::all()->count();
+
+        $delivered = Order::where('status','Package Delivered')->get()->count();
+
+        return view('admin.index',compact('users','products','orders','delivered'));
     }
 
     public function home(){
@@ -158,5 +169,72 @@ class HomeController extends Controller
         return redirect()->back();
     }
     
+
+    public function myorders()
+    {
+        $user = Auth::user()->id;
+        $count = Cart::where('user_id',$user)->get()->count();
+
+        $orders = Order::where('user_id',$user)->get();
+
+        return view('home.order',compact('count','orders'));
+    }
+
+
+    public function stripe($value)
+    {
+        return view('home.stripe',compact('value'));
+    }
+
+
+    public function stripePost(Request $request,$value)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create ([
+
+            "amount" => $value * 100,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Test Payment Completed" 
+
+        ]);
+    
+        $name = Auth::user()->name;
+        $phone = Auth::user()->phone;
+        $address = Auth::user()->address;
+
+        $userid = Auth::user()->id;
+        $carts = Cart::where('user_id',$userid)->get();
+
+
+        foreach($carts as $cart){
+
+            $order = new Order();
+
+            $order->name = $name;
+            $order->rec_address = $address;
+            $order->phone = $phone;
+            $order->user_id = $userid;
+            $order->product_id = $cart->product_id;
+            $order->payment_status = "Paid";
+
+            $order->save();
+        }
+        
+
+        $cart_removes = Cart::where('user_id',$userid)->get();
+
+        foreach($cart_removes as $cart_remove){
+
+            $data = Cart::find($cart_remove->id);
+            $data->delete();
+        }
+
+        toastr()->success('Order Placed Successfully.'); 
+
+        return redirect('mycart');
+
+    }
 
 }
