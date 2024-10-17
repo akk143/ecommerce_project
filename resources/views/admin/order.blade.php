@@ -47,6 +47,8 @@
       <div class="page-header">
         <div class="container-fluid">
 
+            <h3 class="text-white m-4">All Orders</h3>
+
           <div class="d-flex justify-content-center align-items-center table_div">
               <table>
                   <tr>
@@ -56,6 +58,7 @@
                       <th>Product Title</th>
                       <th>Product Image</th>
                       <th>Product Price</th>
+                      <th>Paymetn Status</th>
                       <th>Status</th>
                       <th>Change Status</th>
                       <th>Print PDF</th>
@@ -71,6 +74,7 @@
                             <img src="products/{{$data->product->image}}" width="100" />
                         </td>
                         <td>${{$data->product->price}}</td>
+                        <td>{{$data->payment_status}}</td>
 
                         <td>
                             @if($data->status === 'in progress')

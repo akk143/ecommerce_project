@@ -14,9 +14,7 @@
                     <p>
                       Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
                     </p>
-                    <a href="">
-                      Contact Us
-                    </a>
+                    <a class="nav-link" href="{{url('contact')}}">Contact Us</a>
                   </div>
                 </div>
                 <div class="col-md-5 ">

@@ -44,7 +44,7 @@ Route::get('view_product',[AdminController::class,'view_product'])->middleware([
 
 Route::get('delete_product/{id}',[AdminController::class,'delete_product'])->middleware(['auth','admin']);
 
-Route::get('update_product/{id}',[AdminController::class,'update_product'])->middleware(['auth','admin']);
+Route::get('update_product/{slug}',[AdminController::class,'update_product'])->middleware(['auth','admin']);
 
 Route::post('edit_product/{id}',[AdminController::class,'edit_product'])->middleware(['auth','admin']);
 
@@ -74,6 +74,14 @@ Route::get('on_the_way/{id}',[AdminController::class,'on_the_way'])->middleware(
 Route::get('delivered/{id}',[AdminController::class,'delivered'])->middleware(['auth', 'admin']);
 
 Route::get('print_pdf/{id}',[AdminController::class,'print_pdf'])->middleware(['auth', 'admin']);
+
+Route::get('shop', [HomeController::class,'shop']);
+Route::get('why', [HomeController::class,'why']);
+Route::get('testimonial', [HomeController::class,'testimonial']);
+Route::get('contact', [HomeController::class,'contact']);
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+
 
 
 

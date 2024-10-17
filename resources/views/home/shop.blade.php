@@ -12,9 +12,6 @@
         @include('home.header')
     <!-- end header section -->
 
-    <!-- slider section -->
-        @include('home.slider')
-    <!-- end slider section -->
 
   </div>
   <!-- end hero area -->
@@ -25,14 +22,6 @@
   <!-- end shop section -->
 
 
-
-
-
-
-
-  <!-- info section -->
-        @include('home.info')
-  <!-- end info section -->
 
 
   <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>

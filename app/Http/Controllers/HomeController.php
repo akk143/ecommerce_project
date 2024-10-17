@@ -45,6 +45,70 @@ class HomeController extends Controller
         return view('home.index',compact('products','count'));
     }
 
+    public function shop(){
+
+        $products = Product::all();
+
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.shop',compact('products','count'));
+    }
+
+    public function why(){
+
+        $products = Product::all();
+
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.why',compact('count'));
+    }
+
+    public function contact(){
+
+        $products = Product::all();
+
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.contact',compact('count'));
+    }
+
+    public function testimonial(){
+
+        $products = Product::all();
+
+        if(Auth::id()){
+            $user = Auth::user();
+            $userid = $user->id;
+    
+            $count = Cart::where('user_id',$userid)->count();
+        }else{
+            $count = '';
+        }
+
+        return view('home.testimonial',compact('count'));
+    }
+
 
     public function login_home()
     {
@@ -234,7 +298,6 @@ class HomeController extends Controller
         toastr()->success('Order Placed Successfully.'); 
 
         return redirect('mycart');
-
     }
 
 }

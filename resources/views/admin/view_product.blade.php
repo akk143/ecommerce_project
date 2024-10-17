@@ -83,7 +83,7 @@
                             <img src="products/{{$product->image}}" width="100" height="100" />
                         </td>
 
-                          <td><a class="btn btn-success" href="{{url('update_product',$product->id)}}">Edit</a></td>
+                          <td><a class="btn btn-success" href="{{url('update_product',$product->slug)}}">Edit</a></td>
 
                         <td><a class="btn btn-danger" href="{{url('delete_product',$product->id)}}"  onclick="confirmation(event)">Delete</a></td>
                     </tr>

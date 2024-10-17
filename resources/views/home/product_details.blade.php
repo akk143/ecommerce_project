@@ -53,6 +53,12 @@
                   <p>{{$datas->description}}</p>
               </div>
 
+              <div class="d-flex justify-content-end">
+                <div class="detail-box p-3">
+                  <a href="{{url('add_cart',$datas->id)}}" class=" btn btn-primary text-white">Add to Cart</a>
+                </div>
+              </div>
+
           </div>
         </div>
     </div>
